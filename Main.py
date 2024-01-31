@@ -93,7 +93,7 @@ def d_matrix_type2(dcos_matrix, EA, EI) -> np.ndarray:
 
     return d
 
-
+#удаляю ненужные столбцы
 def remove_reactions(d_matrix) -> np.ndarray:
     i = 0
     while i < 3:
