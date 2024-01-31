@@ -103,7 +103,7 @@ def remove_reactions(d_matrix) -> np.ndarray:
 
     return d_matrix
 
-
+#Решаю матричное уравнение
 def matrix_equation(d_with_opora) -> np.ndarray:
     d_with_opora = np.linalg.inv(d_with_opora)
     d_with_opora = d_with_opora.dot(-Rf)
