@@ -1,4 +1,4 @@
-#сторонние библиотеки
+
 import numpy as np
 from decimal import Decimal
 import math
