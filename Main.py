@@ -13,7 +13,7 @@ print('Вектор нагружения=', '\n', Rf)
 
 print("Матрица KoR = ", "\n", KoR)
 
-
+#Матрица направляющих косинусов
 def DcosFramework(kor) -> np.ndarray:
     n, m = np.shape(kor)
     Le = np.zeros((n, 3))
@@ -24,7 +24,7 @@ def DcosFramework(kor) -> np.ndarray:
 
     return Le
 
-# Создается матрица Д. Сначала создаются 4 маленькие матрицы, а потом через np.concatenate соединяются друг с другом
+# Создается матрица Д. Сначала создаются 4 маленькие матрицы(r, r_dilda, delta, delta_tilda) а потом через np.concatenate соединяются друг с другом
 def d_matrix_type0(dcos_matrix, EA) -> np.ndarray:
     r = np.zeros((4, 4))
 
@@ -39,7 +39,7 @@ def d_matrix_type0(dcos_matrix, EA) -> np.ndarray:
 
     return d
 
-# Создается матрица Д. Сначала создаются 4 маленькие матрицы, а потом через np.concatenate соединяются друг с другом
+# Создается матрица Д. Сначала создаются 4 маленькие матрицы(r, r_dilda, delta, delta_tilda) а потом через np.concatenate соединяются друг с другом
 def d_matrix_type1(dcos_matrix, EA, EI) -> np.ndarray:
     r = np.zeros((6, 6))
 
@@ -67,7 +67,7 @@ def d_matrix_type1(dcos_matrix, EA, EI) -> np.ndarray:
 
     return d
 
-# Создается матрица Д. Сначала создаются 4 маленькие матрицы, а потом через np.concatenate соединяются друг с другом
+# Создается матрица Д. Сначала создаются 4 маленькие матрицы(r, r_dilda, delta, delta_tilda) а потом через np.concatenate соединяются друг с другом
 def d_matrix_type2(dcos_matrix, EA, EI) -> np.ndarray:
     r = np.zeros((6, 6))
 
