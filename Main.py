@@ -24,7 +24,7 @@ def DcosFramework(kor) -> np.ndarray:
 
     return Le
 
-
+# Создается матрица Д. Сначала создаются 4 маленькие матрицы, а потом через np.concatenate соединяются друг с другом
 def d_matrix_type0(dcos_matrix, EA) -> np.ndarray:
     r = np.zeros((4, 4))
 
@@ -39,7 +39,7 @@ def d_matrix_type0(dcos_matrix, EA) -> np.ndarray:
 
     return d
 
-
+# Создается матрица Д. Сначала создаются 4 маленькие матрицы, а потом через np.concatenate соединяются друг с другом
 def d_matrix_type1(dcos_matrix, EA, EI) -> np.ndarray:
     r = np.zeros((6, 6))
 
@@ -67,7 +67,7 @@ def d_matrix_type1(dcos_matrix, EA, EI) -> np.ndarray:
 
     return d
 
-
+# Создается матрица Д. Сначала создаются 4 маленькие матрицы, а потом через np.concatenate соединяются друг с другом
 def d_matrix_type2(dcos_matrix, EA, EI) -> np.ndarray:
     r = np.zeros((6, 6))
 
@@ -111,7 +111,7 @@ def matrix_equation(d_with_opora) -> np.ndarray:
 
     return d_with_opora
 
-
+#Вывод данных
 print("Матрица направляющих косинусов = ", DcosFramework(KoR))
 print("Введите EА и EI")
 ea = float(input())
