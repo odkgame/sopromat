@@ -3,8 +3,25 @@ import numpy as np
 from decimal import Decimal
 import math
 
-print("Введите а")
-a = float(input())
+FILE_NAME = 'C:/Users/user/PycharmProjects/ploski_sterjen/excel/book_output.xlsx'
+#считываю данные из эксель файла бук_инпут
+book_input = xl.open("C:/Users/user/PycharmProjects/ploski_sterjen/excel/book_input.xlsx")
+sheet_input = book_input.active
+a = sheet_input["B1"].value
+ea = sheet_input["B11"].value
+ei = sheet_input["B12"].value
+
+# Считываю папку бук_аутпут, если таковой нет то создаю новую
+try:
+    book_output = xl.load_workbook(FILE_NAME)
+except:
+    book_output = xl.Workbook()
+
+#удаляю дефолтный лист
+for sheet_name in book_output.sheetnames:
+    sheet = book_output.get_sheet_by_name(sheet_name)
+    book_output.remove_sheet(sheet)
+
 KoR = np.array(
     [[0, 0, a, 0]])
 
@@ -13,7 +30,8 @@ print('Вектор нагружения=', '\n', Rf)
 
 print("Матрица KoR = ", "\n", KoR)
 
-#Матрица направляющих косинусов
+
+# Матрица направляющих косинусов
 def DcosFramework(kor) -> np.ndarray:
     n, m = np.shape(kor)
     Le = np.zeros((n, 3))
@@ -23,6 +41,7 @@ def DcosFramework(kor) -> np.ndarray:
         Le[i][2] = (kor[i][2] - kor[i][0]) / Le[i][0]
 
     return Le
+
 
 # Создается матрица Д. Сначала создаются 4 маленькие матрицы(r, r_dilda, delta, delta_tilda) а потом через np.concatenate соединяются друг с другом
 def d_matrix_type0(dcos_matrix, EA) -> np.ndarray:
@@ -38,6 +57,7 @@ def d_matrix_type0(dcos_matrix, EA) -> np.ndarray:
     d = np.concatenate((sub1, sub2), axis=1)
 
     return d
+
 
 # Создается матрица Д. Сначала создаются 4 маленькие матрицы(r, r_dilda, delta, delta_tilda) а потом через np.concatenate соединяются друг с другом
 def d_matrix_type1(dcos_matrix, EA, EI) -> np.ndarray:
@@ -67,6 +87,7 @@ def d_matrix_type1(dcos_matrix, EA, EI) -> np.ndarray:
 
     return d
 
+
 # Создается матрица Д. Сначала создаются 4 маленькие матрицы(r, r_dilda, delta, delta_tilda) а потом через np.concatenate соединяются друг с другом
 def d_matrix_type2(dcos_matrix, EA, EI) -> np.ndarray:
     r = np.zeros((6, 6))
@@ -94,7 +115,8 @@ def d_matrix_type2(dcos_matrix, EA, EI) -> np.ndarray:
 
     return d
 
-#удаляю ненужные столбцы
+
+# удаляю ненужные столбцы
 def remove_reactions(d_matrix) -> np.ndarray:
     i = 0
     while i < 3:
@@ -104,18 +126,42 @@ def remove_reactions(d_matrix) -> np.ndarray:
 
     return d_matrix
 
-#Решаю матричное уравнение
+
+# Решаю матричное уравнение
 def matrix_equation(d_with_opora) -> np.ndarray:
     d_with_opora = np.linalg.inv(d_with_opora)
     d_with_opora = d_with_opora.dot(-Rf)
 
     return d_with_opora
 
-#Вывод данных
-print("Матрица направляющих косинусов = ", DcosFramework(KoR))
-print("Введите EА и EI")
-ea = float(input())
-ei = float(input())
+
+# Создание листа COs и вывод матрицы направляющих косинусов
+sheet_output = book_output.create_sheet("COS")
+for i in range(len(DcosFramework(KoR)[0])):
+    sheet_output.cell(row=1, column=i + 2).value = DcosFramework(KoR)[0][i]
+
+# Создание листа D_matrix и вывод матрицы направляющих косинусов
+sheet_output = book_output.create_sheet("D_matrix")
+x, y = np.shape(d_matrix_type0(dcos_matrix=DcosFramework(KoR),
+                               EA=ea))
+for i in range(x):
+    for j in range(y):
+        sheet_output.cell(row=j + 1, column=i + 2).value = d_matrix_type0(dcos_matrix=DcosFramework(KoR), EA=ea)[0][i]
+
+# Создание листа D_matrix1 и вывод матрицы направляющих косинусов
+sheet_output = book_output.create_sheet("D_matrix1")
+x, y = np.shape(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
+                                                      EA=ea,
+                                                      EI=ei))
+for i in range(x):
+    for j in range(y):
+        sheet_output.cell(row=j + 1, column=i + 2).value = d_matrix_type1(dcos_matrix=DcosFramework(KoR),
+                                                                          EA=ea,
+                                                                          EI=ei)[0][i]
+#Сохраняю и закрываю книгу
+book_output.save(FILE_NAME)
+book_output.close()
+
 print("Матрица d нулевого типа = ", "\n", d_matrix_type0(dcos_matrix=DcosFramework(KoR),
                                                          EA=ea))
 
