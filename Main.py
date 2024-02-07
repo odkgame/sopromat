@@ -16,7 +16,7 @@ try:
     book_output = xl.load_workbook(FILE_NAME)
 except:
     book_output = xl.Workbook()
-C:\Users\user\PycharmProjects\ploski_sterjen\sopromat
+
 # удаляю дефолтный лист
 for sheet_name in book_output.sheetnames:
     sheet = book_output.get_sheet_by_name(sheet_name)
@@ -134,14 +134,14 @@ def matrix_equation(d_with_opora) -> np.ndarray:
 
     return d_with_opora
 
-
+# функция перевода горизонтальных матриц в таблицы
 def num_to_xl_special_hor(matrix, sheet_name):
     sheet_output = book_output.create_sheet(sheet_name)
     x = np.shape(matrix)[1]
     for i in range(x):
         sheet_output.cell(row=1, column=i + 1).value = matrix[0][i]
 
-
+# функция перевода вертикальных матриц в таблицы
 def num_to_xl_special_vert(matrix, sheet_name):
     sheet_output = book_output.create_sheet(sheet_name)
     x = np.shape(matrix)[0]
@@ -150,7 +150,7 @@ def num_to_xl_special_vert(matrix, sheet_name):
 
 
 
-# перевод  numpy матрицы в эксель таблицу
+# функция перевода квадратных матриц в таблицы
 def num_to_xl(matrix, sheet_name):
     sheet_output = book_output.create_sheet(sheet_name)
     x, y = np.shape(matrix)
@@ -160,9 +160,6 @@ def num_to_xl(matrix, sheet_name):
             sheet_output.cell(row=j + 1, column=i + 1).value = matrix[j][i]
 
 
-print(matrix_equation(remove_reactions(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
-                                                               EA=ea,
-                                                               EI=ei)))[1][0])
 
 num_to_xl_special_hor(matrix=DcosFramework(KoR), sheet_name="COS")
 
