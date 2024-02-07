@@ -140,7 +140,7 @@ sheet_output = book_output.create_sheet("COS")
 for i in range(len(DcosFramework(KoR)[0])):
     sheet_output.cell(row=1, column=i + 2).value = DcosFramework(KoR)[0][i]
 
-# Создание листа D_matrix и вывод матрицы направляющих косинусов
+# Создание листа D_matrix и вывод матрицы
 sheet_output = book_output.create_sheet("D_matrix")
 x, y = np.shape(d_matrix_type0(dcos_matrix=DcosFramework(KoR),
                                EA=ea))
@@ -148,7 +148,7 @@ for i in range(x):
     for j in range(y):
         sheet_output.cell(row=j + 1, column=i + 2).value = d_matrix_type0(dcos_matrix=DcosFramework(KoR), EA=ea)[0][i]
 
-# Создание листа D_matrix1 и вывод матрицы направляющих косинусов
+# Создание листа D_matrix1 и вывод матрицы
 sheet_output = book_output.create_sheet("D_matrix1")
 x, y = np.shape(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
                                                       EA=ea,
