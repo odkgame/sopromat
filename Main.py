@@ -4,7 +4,7 @@ from decimal import Decimal
 import math
 
 FILE_NAME = 'C:/Users/user/PycharmProjects/ploski_sterjen/excel/book_output.xlsx'
-#считываю данные из эксель файла бук_инпут
+# считываю данные из эксель файла бук_инпут
 book_input = xl.open("C:/Users/user/PycharmProjects/ploski_sterjen/excel/book_input.xlsx")
 sheet_input = book_input.active
 a = sheet_input["B1"].value
@@ -16,8 +16,8 @@ try:
     book_output = xl.load_workbook(FILE_NAME)
 except:
     book_output = xl.Workbook()
-
-#удаляю дефолтный лист
+C:\Users\user\PycharmProjects\ploski_sterjen\sopromat
+# удаляю дефолтный лист
 for sheet_name in book_output.sheetnames:
     sheet = book_output.get_sheet_by_name(sheet_name)
     book_output.remove_sheet(sheet)
@@ -135,48 +135,74 @@ def matrix_equation(d_with_opora) -> np.ndarray:
     return d_with_opora
 
 
-# Создание листа COs и вывод матрицы направляющих косинусов
-sheet_output = book_output.create_sheet("COS")
-for i in range(len(DcosFramework(KoR)[0])):
-    sheet_output.cell(row=1, column=i + 2).value = DcosFramework(KoR)[0][i]
+def num_to_xl_special_hor(matrix, sheet_name):
+    sheet_output = book_output.create_sheet(sheet_name)
+    x = np.shape(matrix)[1]
+    for i in range(x):
+        sheet_output.cell(row=1, column=i + 1).value = matrix[0][i]
 
-# Создание листа D_matrix и вывод матрицы
-sheet_output = book_output.create_sheet("D_matrix")
-x, y = np.shape(d_matrix_type0(dcos_matrix=DcosFramework(KoR),
-                               EA=ea))
-for i in range(x):
-    for j in range(y):
-        sheet_output.cell(row=j + 1, column=i + 2).value = d_matrix_type0(dcos_matrix=DcosFramework(KoR), EA=ea)[0][i]
 
-# Создание листа D_matrix1 и вывод матрицы
-sheet_output = book_output.create_sheet("D_matrix1")
-x, y = np.shape(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
-                                                      EA=ea,
-                                                      EI=ei))
-for i in range(x):
-    for j in range(y):
-        sheet_output.cell(row=j + 1, column=i + 2).value = d_matrix_type1(dcos_matrix=DcosFramework(KoR),
-                                                                          EA=ea,
-                                                                          EI=ei)[0][i]
-#Сохраняю и закрываю книгу
+def num_to_xl_special_vert(matrix, sheet_name):
+    sheet_output = book_output.create_sheet(sheet_name)
+    x = np.shape(matrix)[0]
+    for i in range(x):
+        sheet_output.cell(row=i+1, column=1).value = matrix[i][0]
+
+
+
+# перевод  numpy матрицы в эксель таблицу
+def num_to_xl(matrix, sheet_name):
+    sheet_output = book_output.create_sheet(sheet_name)
+    x, y = np.shape(matrix)
+
+    for i in range(x):
+        for j in range(y):
+            sheet_output.cell(row=j + 1, column=i + 1).value = matrix[j][i]
+
+
+print(matrix_equation(remove_reactions(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
+                                                               EA=ea,
+                                                               EI=ei)))[1][0])
+
+num_to_xl_special_hor(matrix=DcosFramework(KoR), sheet_name="COS")
+
+num_to_xl_special_vert(matrix_equation(remove_reactions(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
+                                                                       EA=ea,
+                                                                       EI=ei))), "matrix_equation_type1")
+num_to_xl_special_vert(matrix_equation(remove_reactions(d_matrix_type2(dcos_matrix=DcosFramework(KoR),
+                                                                       EA=ea,
+                                                                       EI=ei))), "matrix_equation_type2")
+
+num_to_xl(d_matrix_type0(dcos_matrix=DcosFramework(KoR),
+                         EA=ea), "d_matrix_type0")
+
+num_to_xl(d_matrix_type1(dcos_matrix=DcosFramework(KoR), EA=ea,
+                         EI=ei), "d_matrix_type1")
+
+num_to_xl(d_matrix_type2(dcos_matrix=DcosFramework(KoR), EA=ea,
+                         EI=ei).round(3), "d_matrix_type2")
+
+num_to_xl(remove_reactions(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
+                                          EA=ea,
+                                          EI=ei)).round(3), "d_matrix2_reactions")
+
+# Сохраняю и закрываю книгу
 book_output.save(FILE_NAME)
 book_output.close()
 
-print("Матрица d нулевого типа = ", "\n", d_matrix_type0(dcos_matrix=DcosFramework(KoR),
-                                                         EA=ea))
+# print("Матрица d нулевого типа = ", "\n", d_matrix_type0(dcos_matrix=DcosFramework(KoR), EA=ea))
 
-print("матрица d первого типа = ", "\n", d_matrix_type1(dcos_matrix=DcosFramework(KoR),
-                                                        EA=ea,
-                                                        EI=ei))
+# print("матрица d первого типа = ", "\n", d_matrix_type1(dcos_matrix=DcosFramework(KoR),
+# EA=ea,
+# EI=ei))
+# print("матрица d второго типа = ", "\n", d_matrix_type2(dcos_matrix=DcosFramework(KoR),
+# EA=ea,
+# EI=ei).round(3).astype(Decimal))
 
-print("матрица d второго типа = ", "\n", d_matrix_type2(dcos_matrix=DcosFramework(KoR),
-                                                        EA=ea,
-                                                        EI=ei).round(3).astype(Decimal))
-
-print("Матрица d второго КЭ с жесткой звделкой = ", "\n",
-      remove_reactions(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
-                                      EA=ea,
-                                      EI=ei)).round(3).astype(Decimal))
+# print("Матрица d второго КЭ с жесткой звделкой = ", "\n",
+# remove_reactions(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
+# EA=ea,
+# EI=ei)).round(3).astype(Decimal))
 
 print("Решение матричного уравнение, матрица q, для КЭ первого типа = ", "\n",
       matrix_equation(remove_reactions(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
