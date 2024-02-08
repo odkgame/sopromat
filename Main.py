@@ -1,6 +1,6 @@
 import openpyxl as xl
 import numpy as np
-from decimal import Decimal
+
 import math
 
 FILE_NAME = 'C:/Users/user/PycharmProjects/ploski_sterjen/excel/book_output.xlsx'
@@ -11,7 +11,7 @@ a = sheet_input["B1"].value
 ea = sheet_input["B11"].value
 ei = sheet_input["B12"].value
 
-# Считываю папку бук_аутпут, если таковой нет то создаю новую
+# Считываю файл бук_аутпут, если таковой нет то создаю новую
 try:
     book_output = xl.load_workbook(FILE_NAME)
 except:
@@ -19,16 +19,27 @@ except:
 
 # удаляю дефолтный лист
 for sheet_name in book_output.sheetnames:
-    sheet = book_output.get_sheet_by_name(sheet_name)
-    book_output.remove_sheet(sheet)
+    sheet = book_output[sheet_name]
+    book_output.remove(sheet)
 
-KoR = np.array(
-    [[0, 0, a, 0]])
+# получаю матрицу КоР из файла эксель
+i = 1
+KoR = np.array([])
+while sheet_input[9][i].value != None:
+    KoR = np.append(arr=KoR, values=sheet_input[9][i].value)
+    i += 1
+KoR = np.array([KoR])
 
-Rf = np.array([[100], [0], [0], [0], [0], [0]])
-print('Вектор нагружения=', '\n', Rf)
+# получаю матрицу Вектора нагружения из файла эксель
+Rf = np.array([])
+j = 2
+while sheet_input[j][1].value != None:
+    Rf = np.append(arr=Rf, values=sheet_input[j][1].value)
+    j += 1
 
-print("Матрица KoR = ", "\n", KoR)
+
+# print('Вектор нагружения=', '\n', Rf)
+# print("Матрица KoR = ", "\n", KoR)
 
 
 # Матрица направляющих косинусов
@@ -134,20 +145,21 @@ def matrix_equation(d_with_opora) -> np.ndarray:
 
     return d_with_opora
 
-# функция перевода горизонтальных матриц в таблицы
+
+# функция перевода матриц из одного ряда в таблицы
 def num_to_xl_special_hor(matrix, sheet_name):
     sheet_output = book_output.create_sheet(sheet_name)
     x = np.shape(matrix)[1]
     for i in range(x):
         sheet_output.cell(row=1, column=i + 1).value = matrix[0][i]
 
-# функция перевода вертикальных матриц в таблицы
+
+# функция перевода матриц из одной колонны в таблицы
 def num_to_xl_special_vert(matrix, sheet_name):
     sheet_output = book_output.create_sheet(sheet_name)
     x = np.shape(matrix)[0]
     for i in range(x):
-        sheet_output.cell(row=i+1, column=1).value = matrix[i][0]
-
+        sheet_output.cell(row=i + 1, column=1).value = matrix[i]
 
 
 # функция перевода квадратных матриц в таблицы
@@ -158,7 +170,6 @@ def num_to_xl(matrix, sheet_name):
     for i in range(x):
         for j in range(y):
             sheet_output.cell(row=j + 1, column=i + 1).value = matrix[j][i]
-
 
 
 num_to_xl_special_hor(matrix=DcosFramework(KoR), sheet_name="COS")
@@ -201,12 +212,12 @@ book_output.close()
 # EA=ea,
 # EI=ei)).round(3).astype(Decimal))
 
-print("Решение матричного уравнение, матрица q, для КЭ первого типа = ", "\n",
-      matrix_equation(remove_reactions(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
-                                                      EA=ea,
-                                                      EI=ei))))
+# print("Решение матричного уравнение, матрица q, для КЭ первого типа = ", "\n",
+# matrix_equation(remove_reactions(d_matrix_type1(dcos_matrix=DcosFramework(KoR),
+# EA=ea,
+# EI=ei))))
 
-print("Решение матричного уравнение, матрица q, для второго КЭ = ", "\n",
-      matrix_equation(remove_reactions(d_matrix_type2(dcos_matrix=DcosFramework(KoR),
-                                                      EA=ea,
-                                                      EI=ei))).astype(Decimal))
+# print("Решение матричного уравнение, матрица q, для второго КЭ = ", "\n",
+# matrix_equation(remove_reactions(d_matrix_type2(dcos_matrix=DcosFramework(KoR),
+# EA=ea,
+# EI=ei))).astype(Decimal))
