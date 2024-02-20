@@ -1,7 +1,7 @@
 ﻿import numpy as np
+from decimal import Decimal
 
 from Main import DcosFramework
-
 
 # DcosFramework = DlRE
 
@@ -19,9 +19,9 @@ p = np.array([])
 for i in range(0, n):
     E = np.append(E, E1)
 for i in range(0, n):
-    I = np.append(E, I1)
+    I = np.append(I, I1)
 for i in range(0, n):
-    F = np.append(E, F1)
+    F = np.append(F, F1)
 
 # for i in range(1, n):
 #     p = np.append(E, p1)
@@ -60,10 +60,10 @@ for i in range(1, 3 * n, 3):
 S = np.array([[1, 2, 3, 4, 5, 6], [4, 5, 6, 7, 8, 9],
               [1, 2, 3, 7, 8, 9], [7, 8, 9, 10, 11, 12]])
 
-b_test = []
+b_test = np.array([])
 j = 0
 for i in range(1, 3 * n, 3):
-    b_test[i:i + 2] = DelR(L=Le[j][0], E=E[j], I=I[j], F=F[j])
+    b_test = np.append(b_test, DelR(L=Le[j][0], E=E[j], I=I[j], F=F[j]))
     j += 1
 
 B = np.diag(b_test)
@@ -71,19 +71,12 @@ B_sub = np.linalg.inv(B)
 
 Rp = np.zeros((3 * n, 12))
 
-for i in range(1, n - 1):
+for i in range(0, n - 1):
     Rbl = DTRE(L=Le)
-    for t in range(1, 3):
-        for k in range(1, 6):
+    for t in range(0, 3):
+        for k in range(0, 6):
             Rp[int(W[i, t])][int(S[i, k])] = Rp[int(W[i, t])][int(S[i][k])] + Rbl[t][k]
 
-print(Rp)
+R = [Rp[:, 4:9], Rp[:, 11]]
 
-
-
-
-
-
-
-
-
+print(R)
