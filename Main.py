@@ -37,9 +37,10 @@ while sheet_input[j][1].value != None:
     Rf = np.append(arr=Rf, values=sheet_input[j][1].value)
     j += 1
 
-
 # print('Вектор нагружения=', '\n', Rf)
 # print("Матрица KoR = ", "\n", KoR)
+
+KoR = np.array([[0, 0, 0, 2]])
 
 
 # Матрица направляющих косинусов
@@ -48,10 +49,12 @@ def DcosFramework(kor) -> np.ndarray:
     Le = np.zeros((n, 3))
     for i in range(0, n):
         Le[i][0] = math.sqrt((kor[i][2] - kor[i][0]) ** 2 + (kor[i][3] - kor[i][1]) ** 2)
-        Le[i][1] = (kor[i][3] - kor[i][1]) / Le[i][0]
-        Le[i][2] = (kor[i][2] - kor[i][0]) / Le[i][0]
+        Le[i][1] = (kor[i][2] - kor[i][0]) / Le[i][0]
+        Le[i][2] = (kor[i][3] - kor[i][1]) / Le[i][0]
 
     return Le
+
+
 
 
 # Создается матрица Д. Сначала создаются 4 маленькие матрицы(r, r_dilda, delta, delta_tilda) а потом через np.concatenate соединяются друг с другом

@@ -60,6 +60,8 @@ for i in range(1, 3 * n, 3):
 S = np.array([[1, 2, 3, 4, 5, 6], [4, 5, 6, 7, 8, 9],
               [1, 2, 3, 7, 8, 9], [7, 8, 9, 10, 11, 12]])
 
+
+
 b_test = np.array([])
 j = 0
 for i in range(1, 3 * n, 3):
@@ -70,13 +72,11 @@ B = np.diag(b_test)
 B_sub = np.linalg.inv(B)
 
 Rp = np.zeros((3 * n, 12))
+k = 0
+Rbl = DTRE(L=Le)
+for i in range(0, n-1):
+    for t in range(3):
+        for k in range(6):
+            Rp[int(W[i, t])-1][int(S[i, k])-1] += Rbl[t][k]
 
-for i in range(0, n - 1):
-    Rbl = DTRE(L=Le)
-    for t in range(0, 3):
-        for k in range(0, 6):
-            Rp[int(W[i, t])][int(S[i, k])] = Rp[int(W[i, t])][int(S[i][k])] + Rbl[t][k]
 
-R = [Rp[:, 4:9], Rp[:, 11]]
-
-print(R)
