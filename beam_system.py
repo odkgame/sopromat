@@ -41,26 +41,33 @@ def DelR(L, E, I, F) -> np.array:
 # полная dot delta для рамы
 # L(i,j) - cos и sin для i-го КЭ, L(i,i) -длина i-го КЭ
 def DTRE(L) -> np.array:
-    r = np.array([[L[0][1], L[0][2], 0, -L[0][1], -L[0][2], 0],
-                  [L[0][2], -L[0][1], -L[0][0] / 2, -L[0][2], L[0][1], -L[0][0] / 2],
-                  [0, 0, 1, 0, 0, -1]])
+    if len(np.shape(L)) == 2:
+        r = np.array([[L[0][1], L[0][2], 0, -L[0][1], -L[0][2], 0],
+                      [L[0][2], -L[0][1], -L[0][0] / 2, -L[0][2], L[0][1], -L[0][0] / 2],
+                      [0, 0, 1, 0, 0, -1]])
+    else:
+        r = np.array([[L[1], L[2], 0, -L[1], -L[2], 0],
+                      [L[2], -L[1], -L[0] / 2, -L[2], L[1], -L[0] / 2],
+                      [0, 0, 1, 0, 0, -1]])
     return r
 
 
-j = 0
-W = np.zeros((n, n))
-for i in range(1, 3 * n, 3):
-    W[j, 0] = j + 1
-    W[j, 1] = i
-    W[j, 2] = i + 1
-    W[j, 3] = i + 2
-    j = j + 1
+count = 1
+W = np.zeros((4, 3))
+for i in range(4):
+    for j in range(3):
+        W[i][j] = count
+        count += 1
+
+
 
 # задаем матрицу соответствия локальных перемещений глобальным (ее нужно задавать вручную)
 S = np.array([[1, 2, 3, 4, 5, 6], [4, 5, 6, 7, 8, 9],
               [1, 2, 3, 7, 8, 9], [7, 8, 9, 10, 11, 12]])
 
 
+W -= 1
+S -= 1
 
 b_test = np.array([])
 j = 0
@@ -72,11 +79,14 @@ B = np.diag(b_test)
 B_sub = np.linalg.inv(B)
 
 Rp = np.zeros((3 * n, 12))
-k = 0
+
 Rbl = DTRE(L=Le)
-for i in range(0, n-1):
+for i in range(4):
+    Rbl = DTRE(L=Le[i])
     for t in range(3):
         for k in range(6):
-            Rp[int(W[i, t])-1][int(S[i, k])-1] += Rbl[t][k]
+            Rp[int(W[i, t])][int(S[i, k])] += Rbl[t][k]
+            print(int(W[i, t]),int(S[i, k]),"!",i,t,k)
 
-
+np.set_printoptions(precision=4)
+print(Rp[6])
