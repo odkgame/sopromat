@@ -3,6 +3,8 @@ from decimal import Decimal
 
 from Main import DcosFramework
 
+np.set_printoptions(precision=2, suppress= True)
+
 # DcosFramework = DlRE
 
 E1: int = 2 * 10 ** 4
@@ -59,12 +61,9 @@ for i in range(4):
         W[i][j] = count
         count += 1
 
-
-
 # задаем матрицу соответствия локальных перемещений глобальным (ее нужно задавать вручную)
 S = np.array([[1, 2, 3, 4, 5, 6], [4, 5, 6, 7, 8, 9],
               [1, 2, 3, 7, 8, 9], [7, 8, 9, 10, 11, 12]])
-
 
 W -= 1
 S -= 1
@@ -86,7 +85,20 @@ for i in range(4):
     for t in range(3):
         for k in range(6):
             Rp[int(W[i, t])][int(S[i, k])] += Rbl[t][k]
-            print(int(W[i, t]),int(S[i, k]),"!",i,t,k)
 
-np.set_printoptions(precision=4)
-print(Rp[6])
+R = np.array(Rp[:, 3:9])
+R_sub = np.array(Rp[:, 11:12])
+R = np.concatenate((R, R_sub), axis=1)
+
+C = np.transpose(R * -1)
+C1 = C * (-1)
+K = np.dot(C1, B_sub)
+K = np.dot(K, R)
+
+P1 = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+P2 = np.array([0, 0, 2 * 10 ^ 4, 10 ^ 5, 0, 0, 0])
+
+P = np.concatenate((P1, P2), axis=0)
+
+R_dot = np.zeros((7, 7))
+
