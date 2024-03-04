@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from Main import DcosFramework
 
-np.set_printoptions(precision=2, suppress= True)
+np.set_printoptions(precision=4, suppress=True)
 
 # DcosFramework = DlRE
 
@@ -90,15 +90,26 @@ R = np.array(Rp[:, 3:9])
 R_sub = np.array(Rp[:, 11:12])
 R = np.concatenate((R, R_sub), axis=1)
 
-C = np.transpose(R * -1)
+C = np.transpose(R)
 C1 = C * (-1)
 K = np.dot(C1, B_sub)
 K = np.dot(K, R)
 
 P1 = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-P2 = np.array([0, 0, 2 * 10 ^ 4, 10 ^ 5, 0, 0, 0])
+P2 = np.array([0, 0, 2 * 10 ** 4, 10 ** 5, 0, 0, 0])
 
 P = np.concatenate((P1, P2), axis=0)
 
 R_dot = np.zeros((7, 7))
+
+B_R = np.concatenate((B, R), axis=1)
+C_Rdot = np.concatenate((C, R_dot), axis=1)
+D = np.concatenate((B_R, C_Rdot), axis=0)
+
+x = np.linalg.solve(D, P)
+y = np.linalg.solve(K, P2)
+for i in range(len(x)):
+    print(x[i])
+
+
 
