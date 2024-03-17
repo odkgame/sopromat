@@ -2,11 +2,11 @@
 
 from Main import DcosFramework
 
-# Изменение отображения матриц при print()
+# Настройка отображения матриц при print()
 np.set_printoptions(precision=4, suppress=True)
 
 # DcosFramework = DlRE
-
+# Жесткости, размеры сечения
 E1: int = 2 * 10 ** 4
 b: float = 0.1
 h: float = 0.1
@@ -17,7 +17,7 @@ E = np.array([])
 I = np.array([])
 F = np.array([])
 p = np.array([])
-
+# собираем массивы со значениями
 for i in range(0, n):
     E = np.append(E, E1)
 for i in range(0, n):
@@ -104,7 +104,7 @@ C = np.transpose(R)
 C1 = C * (-1)
 K = np.dot(C1, B_sub)
 K = np.dot(K, R)
-
+# матрицы внешних нагрузок
 P1 = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 P2 = np.array([0, 0, 2 * 10 ** 4, 10 ** 5, 0, 0, 0])
 
