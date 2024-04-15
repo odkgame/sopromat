@@ -2,7 +2,7 @@ import numpy as np
 
 Del = np.zeros((8, 8))
 
-
+# Формирование блока дельта локальной матрицы откликов
 def DelPl12(a, b, Dx, Dy, Dk, MuX, MuY):
     Del[0, 0] = (
                         2 * Dk * Dx ** 2 * MuX ** 2 * b ** 4 - 5 * Dx * Dy ** 2 * MuX * MuY * a ** 2 * b ** 2 + 2 * Dk * Dy ** 2 * a ** 4 + 5 * Dx * Dy ** 2 * a ** 2 * b ** 2) / (
@@ -103,4 +103,5 @@ def DelPl12(a, b, Dx, Dy, Dk, MuX, MuY):
     return Del
 
 
-print(DelPl12(1, 2, 3, 4, 5, 6, 7, ))
+print(DelPl12(0.25,0.25,1,1,0.7,0.3,0.3)[7])
+
