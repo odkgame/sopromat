@@ -19,4 +19,4 @@ def FE_DFun(m, n1):
     return FE_D
 
 
-print(FE_DFun(16, 4))
+
