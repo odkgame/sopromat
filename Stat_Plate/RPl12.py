@@ -3,7 +3,7 @@ import numpy as np
 
 # создаем локальную матрицу r
 def RPl12(a, b, Dk):
-    R1 = np.zeros((4,4))
+    R1 = np.zeros((4, 4))
     R1[0, 0] = 2 * Dk / (a * b)
     R1[0, 1] = -R1[0, 0]
     R1[0, 2] = R1[0, 0]
@@ -20,7 +20,5 @@ def RPl12(a, b, Dk):
     R1[3, 1] = R1[0, 0]
     R1[3, 2] = -R1[0, 0]
     R1[3, 3] = R1[0, 0]
-    print(R1)
-    return R1
 
-RPl12(3,3,5)
+    return R1

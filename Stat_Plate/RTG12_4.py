@@ -9,13 +9,19 @@ import numpy as np
 
 def RTG12_4(RT, FE_F, FE_D, m):
     # создаем глобальную матрицу rt
+    print(FE_D)
+    print(FE_F)
+    FE_D -= 1
+    FE_F -= 1
+    s1 = int(np.max(FE_F)-1)
+    s2 = int(np.max(FE_D))
+    RTGl = np.zeros((s2, s1))
+    for i in range(m - 1):
+        for j in range(4):
+            for k in range(8):
+                RTGl[int(FE_D[i, j])][int(FE_F[i, k])] += RT[j, k]
 
-    s1 = np.max(FE_F)
-    s2 = np.max(FE_D)
-    RTGl = np.zeros(s2, s1)
-    for i in range(1, m):
-        for j in range(1, 4):
-            for k in range(1, 8):
-                RTGl[int(FE_D[i, j]), int(FE_F[i, k])] += RT[j, k]
+
+
 
     return RTGl

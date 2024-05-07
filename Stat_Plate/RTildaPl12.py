@@ -48,4 +48,3 @@ def RTildaPl12(a, b, Dx, Dy, Dk, MuX, MuY):
 
     return RT
 
-print(RTildaPl12(0.25,0.25,1,1,0.7,0.3,0.3))

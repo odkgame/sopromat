@@ -4,7 +4,7 @@ import numpy as np
 # Удаление столбцов из блоков
 def RedMatrCol(Matr, TRed):
     RedMatrC = np.array([])
-    if TRed(1) != 0:
+    if TRed[1] != 0:
         n = len(TRed)
 
     k = 0

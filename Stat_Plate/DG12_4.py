@@ -1,6 +1,6 @@
 import numpy as np
 
-
+#создаем глобальную матрицу d (дельта)
 def DG12_4(Del, FE_F, m):
     t = 0
     s = np.max(FE_F)

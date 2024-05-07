@@ -105,4 +105,4 @@ def DelPl12(a, b, Dx, Dy, Dk, MuX, MuY):
 
 
 
-print(DelPl12(0.25,0.25,1,1,0.7,0.3,0.3))
+
