@@ -54,7 +54,6 @@ def DTRE(L) -> np.array:
                       [0, 0, 1, 0, 0, -1]])
     return r
 
-
 count = 1
 W = np.zeros((4, 3))
 for i in range(4):
@@ -83,7 +82,7 @@ B_sub = np.linalg.inv(B)
 Rp = np.zeros((3 * n, 12))
 
 Rbl = DTRE(L=Le)
-for i in range(4):
+for i in range(n):
     Rbl = DTRE(L=Le[i])
     for t in range(3):
         for k in range(6):

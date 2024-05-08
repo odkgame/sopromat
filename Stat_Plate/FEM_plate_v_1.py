@@ -1,14 +1,14 @@
 import numpy as np
 from DelPl12 import DelPl12
-# import DG12_4
+from DG12_4 import DG12_4
 # import DRedPl_4
 # import DRedPl_5
 # import DRedPl_6
 # import DRedPl_137
-# import DTG12_4
+from DTG12_4 import DTG12_4
 from FE_DFun import FE_DFun
 from FE_FFun import FE_FFun
-# import PGP12_4
+from PGP12_4 import PGP12_4
 from PpPl12_plus import PpPl12_plus
 # import RedMatrCol
 # import RedMatrRow
@@ -59,3 +59,14 @@ RGl = RG12_4(R, FE_D, m)
 
 # создаем глобальную матрицу RTGl
 RTGl = RTG12_4(RT, FE_F, FE_D, m)
+
+# создаем глобальную матрицу DTGl
+DTGl = DTG12_4(DT, FE_F, FE_D, m)
+
+# создаем глобальную матрицу DGl
+DGl = DG12_4(Del, FE_F, m)
+
+# создаем глобальный вектор Pp
+PGlP = PGP12_4(Pp, FE_D, m)
+
+

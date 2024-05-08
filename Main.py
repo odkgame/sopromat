@@ -3,9 +3,9 @@ import numpy as np
 
 import math
 
-FILE_NAME = 'C:/Users/Сережа/Desktop/book_output.xlsx'
+FILE_NAME = 'book_output.xlsx'
 # считываю данные из эксель файла бук_инпут
-book_input = xl.open("C:/Users/Сережа/Desktop/book_input.xlsx")
+book_input = xl.open("book_input.xlsx")
 sheet_input = book_input.active
 a = sheet_input["B1"].value
 ea = sheet_input["B11"].value
@@ -224,3 +224,6 @@ book_output.close()
 # matrix_equation(remove_reactions(d_matrix_type2(dcos_matrix=DcosFramework(KoR),
 # EA=ea,
 # EI=ei))).astype(Decimal))
+
+
+
