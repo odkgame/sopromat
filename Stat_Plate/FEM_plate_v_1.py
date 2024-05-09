@@ -1,23 +1,23 @@
 import numpy as np
 from DelPl12 import DelPl12
 from DG12_4 import DG12_4
-# import DRedPl_4
-# import DRedPl_5
-# import DRedPl_6
-# import DRedPl_137
+from DRedPl_4 import DRedPl_4
+from DRedPl_5 import DRedPl_5
+from DRedPl_6 import DRedPl_6
+from DRedPl_137 import DRedPl_137
 from DTG12_4 import DTG12_4
 from FE_DFun import FE_DFun
 from FE_FFun import FE_FFun
 from PGP12_4 import PGP12_4
 from PpPl12_plus import PpPl12_plus
-# import RedMatrCol
-# import RedMatrRow
+from RedMatrCol import RedMatrCol
+from RedMatrRow import RedMatrRow
 from RG12_4 import RG12_4
 from RPl12 import RPl12
-# import RRedFunPl_1_2_4
-# import RRedFunPl_3_5
-# import RRedFunPl_6
-# import RRedFunPl_7
+from RRedFunPl_1_2_4 import RRedFunPl_1_2_4
+from RRedFunPl_3_5 import RRedFunPl_3_5
+from RRedFunPl_6 import RRedFunPl_6
+from RRedFunPl_7 import RRedFunPl_7
 from RTG12_4 import RTG12_4
 from RTildaPl12 import RTildaPl12
 
@@ -69,4 +69,34 @@ DGl = DG12_4(Del, FE_F, m)
 # создаем глобальный вектор Pp
 PGlP = PGP12_4(Pp, FE_D, m)
 
+print("Выберите тип граничных условий(номер): ")
+print("1. Свободное опирание по контуру; ")
+print("2. Жесткое защемление по контуру; ")
+print("3. Две кромки свободно оперты, две остальные свободны от связей; ")
+print("4. Две кромки свободно оперты, две остальные жестко защемлены; ")
+print("5. Две кромки жестко защемлены, две остальные свободны от связей; ")
+print("6. Одна кромка жестко защемлена, остальные свободны от связей; ")
+print("7. Шарнирное опирание по 4 угловым точкам")
+case = int(input())
 
+# Обрабатываем результат выбора
+if case == 1:
+    # вектор редуцир перемещений
+    RRed = RRedFunPl_1_2_4(n1, n2)
+
+    # вектор редуцир усилий
+    DRed = DRedPl_137(n1, n2)
+
+    # редуцируем все матрицы и векторы
+    #RGlR = RedMatrCol(RGl, RRed)
+    #RGlR = RedMatrRow(RGlR, RRed)
+    #RTGlR = RedMatrCol(RTGl, DRed)
+    #RTGlR = RedMatrRow(RTGlR, RRed)
+    #DTGlR = RedMatrCol(DTGl, RRed)
+    #DTGlR = RedMatrRow(DTGlR, DRed)
+    #DGlR = RedMatrCol(DGl, DRed)
+    #DGlR = RedMatrRow(DGlR, DRed)
+
+    #PGPR = RedMatrRow(PGlP, RRed)
+
+print(DRed)
