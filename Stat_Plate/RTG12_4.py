@@ -12,10 +12,10 @@ def RTG12_4(RT, FE_F, FE_D, m, ):
 
     sub_FE_F = FE_F - 1
     sub_FE_D = FE_D - 1
-    s1 = int(np.max(FE_F)-2)
-    s2 = int(np.max(FE_D)-1)
+    s1 = int(np.max(FE_F))
+    s2 = int(np.max(FE_D))
     RTGl = np.zeros((s2, s1))
-    for i in range(m - 1):
+    for i in range(m):
         for j in range(4):
             for k in range(8):
                 RTGl[int(sub_FE_D[i, j])][int(sub_FE_F[i, k])] += RT[j, k]

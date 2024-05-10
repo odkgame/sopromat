@@ -70,33 +70,67 @@ DGl = DG12_4(Del, FE_F, m)
 PGlP = PGP12_4(Pp, FE_D, m)
 
 print("Выберите тип граничных условий(номер): ")
-print("1. Свободное опирание по контуру; ")
-print("2. Жесткое защемление по контуру; ")
-print("3. Две кромки свободно оперты, две остальные свободны от связей; ")
-print("4. Две кромки свободно оперты, две остальные жестко защемлены; ")
-print("5. Две кромки жестко защемлены, две остальные свободны от связей; ")
-print("6. Одна кромка жестко защемлена, остальные свободны от связей; ")
+print("1. Свободное опирание по контуру ")
+print("2. Жесткое защемление по контуру ")
+print("3. Две кромки свободно оперты, две остальные свободны от связей ")
+print("4. Две кромки свободно оперты, две остальные жестко защемлены ")
+print("5. Две кромки жестко защемлены, две остальные свободны от связей ")
+print("6. Одна кромка жестко защемлена, остальные свободны от связей ")
 print("7. Шарнирное опирание по 4 угловым точкам")
-case = int(input())
+type = int(input())
 
 # Обрабатываем результат выбора
-if case == 1:
-    # вектор редуцир перемещений
-    RRed = RRedFunPl_1_2_4(n1, n2)
+match type:
+    case 1:
+        # вектор редуцир перемещений
+        RRed = RRedFunPl_1_2_4(n1, n2)
 
-    # вектор редуцир усилий
-    DRed = DRedPl_137(n1, n2)
+        # вектор редуцир усилий
+        DRed = DRedPl_137(n1, n2)
 
-    # редуцируем все матрицы и векторы
-    #RGlR = RedMatrCol(RGl, RRed)
-    #RGlR = RedMatrRow(RGlR, RRed)
-    #RTGlR = RedMatrCol(RTGl, DRed)
-    #RTGlR = RedMatrRow(RTGlR, RRed)
-    #DTGlR = RedMatrCol(DTGl, RRed)
-    #DTGlR = RedMatrRow(DTGlR, DRed)
-    #DGlR = RedMatrCol(DGl, DRed)
-    #DGlR = RedMatrRow(DGlR, DRed)
+        # редуцируем все матрицы и векторы
+        RGlR = RedMatrCol(RGl, RRed)
+        RGlR = RedMatrRow(RGlR, RRed)
+        RTGlR = RedMatrCol(RTGl, DRed)
+        RTGlR = RedMatrRow(RTGlR, RRed)
+        DTGlR = RedMatrCol(DTGl, RRed)
+        DTGlR = RedMatrRow(DTGlR, DRed)
+        DGlR = RedMatrCol(DGl, DRed)
+        DGlR = RedMatrRow(DGlR, DRed)
 
-    #PGPR = RedMatrRow(PGlP, RRed)
+        PGPR = RedMatrRow(PGlP, RRed)
 
-print(DRed)
+    case 2:
+        # вектор редуцирования перемещений
+        RRed = RRedFunPl_1_2_4(n1, n2)
+        
+        # редуцируем все матрицы и веторы
+        RGlR = RedMatrCol(RGl, RRed)
+        RGlR = RedMatrRow(RGlR, RRed)
+        RTGlR = RedMatrRow(RTGl, RRed)
+        DTGlR = RedMatrCol(DTGl, RRed)
+        DGlR = [DGl]
+        
+        PGPR = RedMatrRow(PGlP, RRed)
+
+    case 3:
+        # вектор редуцирования перемещений
+        RRed = RRedFunPl_3_5(n1, n2)
+
+        # вектор редуцир усилий
+        DRed = DRedPl_137(n1, n2)
+
+        # редуцируем все матрицы и векторы
+        #[RGlR] = RedMatrCol(RGl, RRed)
+        #[RGlR] = RedMatrRow(RGlR, RRed)
+        #[RTGlR] = RedMatrCol(RTGl, DRed)
+        #[RTGlR] = RedMatrRow(RTGlR, RRed)
+        #[DTGlR] = RedMatrCol(DTGl, RRed)
+        #[DTGlR] = RedMatrRow(DTGlR, DRed)
+        #[DGlR] = RedMatrCol(DGl, DRed)
+        #[DGlR] = RedMatrRow(DGlR, DRed)
+
+        #[PGPR] = RedMatrRow(PGlP, RRed)
+
+
+print(RRed)

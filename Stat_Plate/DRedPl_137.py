@@ -11,7 +11,7 @@ def DRedPl_137(n1, n2):
     DRed137[1] = 2
 
     tr = 2
-    for i in range(1, n1-1):
+    for i in range(1, n1):
         DRed137[tr] = 2 * i + 2
         tr += 1
 
