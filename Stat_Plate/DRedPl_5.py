@@ -6,7 +6,7 @@ import numpy as np
 
 def DRedPl_5(n1, n2):
     tr = 1
-    DRedPl5 = np.array([])
+    DRedPl5 = np.zeros((6, 1))
     for i in range(1, int(n2) - 1):
         DRedPl5[tr] = (i * n1 + i) * 2 + 1
         tr += 1

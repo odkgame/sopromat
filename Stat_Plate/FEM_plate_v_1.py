@@ -103,14 +103,14 @@ match type:
     case 2:
         # вектор редуцирования перемещений
         RRed = RRedFunPl_1_2_4(n1, n2)
-        
+
         # редуцируем все матрицы и веторы
         RGlR = RedMatrCol(RGl, RRed)
         RGlR = RedMatrRow(RGlR, RRed)
         RTGlR = RedMatrRow(RTGl, RRed)
         DTGlR = RedMatrCol(DTGl, RRed)
         DGlR = [DGl]
-        
+
         PGPR = RedMatrRow(PGlP, RRed)
 
     case 3:
@@ -121,16 +121,94 @@ match type:
         DRed = DRedPl_137(n1, n2)
 
         # редуцируем все матрицы и векторы
-        #[RGlR] = RedMatrCol(RGl, RRed)
-        #[RGlR] = RedMatrRow(RGlR, RRed)
-        #[RTGlR] = RedMatrCol(RTGl, DRed)
-        #[RTGlR] = RedMatrRow(RTGlR, RRed)
-        #[DTGlR] = RedMatrCol(DTGl, RRed)
-        #[DTGlR] = RedMatrRow(DTGlR, DRed)
-        #[DGlR] = RedMatrCol(DGl, DRed)
-        #[DGlR] = RedMatrRow(DGlR, DRed)
+        RGlR = RedMatrCol(RGl, RRed)
+        RGlR = RedMatrRow(RGlR, RRed)
+        RTGlR = RedMatrCol(RTGl, DRed)
 
-        #[PGPR] = RedMatrRow(PGlP, RRed)
+        RTGlR = RedMatrRow(RTGlR, RRed)
+        DTGlR = RedMatrCol(DTGl, RRed)
+        DTGlR = RedMatrRow(DTGlR, DRed)
+        DGlR = RedMatrCol(DGl, DRed)
+        DGlR = RedMatrRow(DGlR, DRed)
 
+        PGPR = RedMatrRow(PGlP, RRed)
 
-print(RRed)
+    case 4:
+        # вектор редуцир перемещений
+        RRed = RRedFunPl_1_2_4(n1, n2)
+
+        # вектор редуцир усилий
+        DRed = DRedPl_4(n1, n2)
+
+        # редуцируем все матрицы и векторы 
+
+        RGlR = RedMatrCol(RGl, RRed)
+        RGlR = RedMatrRow(RGlR, RRed)
+        RTGlR = RedMatrCol(RTGl, DRed)
+        RTGlR = RedMatrRow(RTGlR, RRed)
+        DTGlR = RedMatrCol(DTGl, RRed)
+        DTGlR = RedMatrRow(DTGlR, DRed)
+        DGlR = RedMatrCol(DGl, DRed)
+        DGlR = RedMatrRow(DGlR, DRed)
+
+        PGPR = RedMatrRow(PGlP, RRed)
+
+    case 5:
+
+        # вектор редуцир перемещений
+        RRed = RRedFunPl_3_5(n1, n2)
+
+        # вектор редуцир усилий
+        DRed = DRedPl_5(n1, n2)
+
+        # редуцируем все матрицы и векторы
+        RGlR = RedMatrCol(RGl, RRed)
+        RGlR = RedMatrRow(RGlR, RRed)
+        RTGlR = RedMatrCol(RTGl, DRed)
+        RTGlR = RedMatrRow(RTGlR, RRed)
+        DTGlR = RedMatrCol(DTGl, RRed)
+        DTGlR = RedMatrRow(DTGlR, DRed)
+        DGlR = RedMatrCol(DGl, DRed)
+        DGlR = RedMatrRow(DGlR, DRed)
+
+        PGPR = RedMatrRow(PGlP, RRed)
+
+    case 6:
+
+        # вектор редуцир перемещений
+        RRed = RRedFunPl_6(n1, n2)
+
+        # вектор редуцир усилий
+        DRed = DRedPl_6(n1, n2)
+
+        # редуцируем все матрицы и векторы
+        RGlR = RedMatrCol(RGl, RRed)
+        RGlR = RedMatrRow(RGlR, RRed)
+        RTGlR = RedMatrCol(RTGl, DRed)
+        RTGlR = RedMatrRow(RTGlR, RRed)
+        DTGlR = RedMatrCol(DTGl, RRed)
+        DTGlR = RedMatrRow(DTGlR, DRed)
+        DGlR = RedMatrCol(DGl, DRed)
+        DGlR = RedMatrRow(DGlR, DRed)
+
+        PGPR = RedMatrRow(PGlP, RRed)
+
+    case 7:
+        # вектор редуцир перемещений
+        RRed = RRedFunPl_7(n1, n2)
+
+        # вектор редуцир усилий
+        DRed = DRedPl_137(n1, n2)
+
+        # редуцируем все матрицы и векторы
+        RGlR = RedMatrCol(RGl, RRed)
+        RGlR = RedMatrRow(RGlR, RRed)
+        RTGlR = RedMatrCol(RTGl, DRed)
+        RTGlR = RedMatrRow(RTGlR, RRed)
+        DTGlR = RedMatrCol(DTGl, RRed)
+        DTGlR = RedMatrRow(DTGlR, DRed)
+        DGlR = RedMatrCol(DGl, DRed)
+        DGlR = RedMatrRow(DGlR, DRed)
+
+        PGPR = RedMatrRow(PGlP, RRed)
+        print(PGPR)
