@@ -19,4 +19,6 @@ def RRedFunPl_1_2_4(n1, n2):
         RRed[tr] = RRed[tr - 1] + 1
         tr += 1
 
+
+
     return RRed

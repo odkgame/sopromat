@@ -33,7 +33,7 @@ def DelPl12(a, b, Dx, Dy, Dk, MuX, MuY):
                         -7 * Dk * Dx ** 2 * MuX ** 2 * b ** 4 - 7 * Dk * Dy ** 2 * a ** 4 - 5 * Dx * Dy ** 2 * MuX * MuY * a ** 2 * b ** 2 + 5 * Dx * Dy ** 2 * a ** 2 * b ** 2) / (
                         180 * Dx ** 2 * Dy ** 2 * MuX ** 2 * MuY ** 2 * a * b - 360 * Dx ** 2 * Dy ** 2 * MuX * MuY * a * b + 180 * Dx ** 2 * Dy ** 2 * a * b)
     Del[4, 0] = Del[0, 4]
-    Del[4, 6] = Del[0, 4]
+    Del[2, 6] = Del[0, 4]
     Del[6, 2] = Del[0, 4]
     Del[0, 5] = (
                         5 * Dx * Dy ** 2 * MuX * MuY ** 2 * a ** 2 * b ** 2 + 7 * Dk * Dx ** 2 * MuX * b ** 4 + 7 * Dk * Dy ** 2 * MuY * a ** 4 - 5 * Dx * Dy ** 2 * MuY * a ** 2 * b ** 2) / (

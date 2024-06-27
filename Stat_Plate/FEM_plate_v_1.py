@@ -21,6 +21,8 @@ from RRedFunPl_7 import RRedFunPl_7
 from RTG12_4 import RTG12_4
 from RTildaPl12 import RTildaPl12
 
+np.set_printoptions(suppress=True, precision=5)
+
 # исходные данные надо будет в будущем поменять на автоматическое заполнение, пока сделаю с константами
 # исходные данные
 
@@ -211,4 +213,14 @@ match type:
         DGlR = RedMatrRow(DGlR, DRed)
 
         PGPR = RedMatrRow(PGlP, RRed)
-        print(PGPR)
+
+PGDR = np.zeros((np.shape(DGlR)[0], 1))
+
+# Формируем глабальную матрицу откликов
+MOG_sub1 = np.concatenate((RGlR, RTGlR), axis=1)
+MOG_sub2 = np.concatenate((DTGlR, DGlR), axis=1)
+MOG = np.concatenate((MOG_sub1, MOG_sub2), axis=0)
+
+PG1 = np.concatenate((PGPR,PGDR), axis=0)
+
+
