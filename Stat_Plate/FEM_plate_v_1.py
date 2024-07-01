@@ -1,4 +1,8 @@
 import numpy as np
+import scipy as sp
+from scipy.sparse.linalg import splu
+from scipy.sparse import csc_matrix
+
 from DelPl12 import DelPl12
 from DG12_4 import DG12_4
 from DRedPl_4 import DRedPl_4
@@ -221,6 +225,20 @@ MOG_sub1 = np.concatenate((RGlR, RTGlR), axis=1)
 MOG_sub2 = np.concatenate((DTGlR, DGlR), axis=1)
 MOG = np.concatenate((MOG_sub1, MOG_sub2), axis=0)
 
-PG1 = np.concatenate((PGPR,PGDR), axis=0)
+# Формируем глабальный вектор воздейстий
+PG1 = np.concatenate((PGPR, PGDR), axis=0)
 
+# Приводим редуцированную глобальную матрицу откликов к формату «Разреженная матрица - Sparse matrix»
+MOG_SP = sp.sparse.coo_matrix(MOG)
+MOG_SP = csc_matrix(MOG_SP)
+lu = splu(MOG_SP)
+
+# Решаем систему линейных алгебраических уравнений
+x = lu.solve(PG1)
+
+w = np.shape(RGlR)[0]
+v = np.shape(DGlR)[0]
+
+x1 = x[0:w]
+x2 = x[(w + 0):(w + v)]
 
