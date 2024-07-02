@@ -25,7 +25,7 @@ from RRedFunPl_7 import RRedFunPl_7
 from RTG12_4 import RTG12_4
 from RTildaPl12 import RTildaPl12
 
-np.set_printoptions(suppress=True, precision=5)
+np.set_printoptions(suppress=True, precision=6)
 
 # исходные данные надо будет в будущем поменять на автоматическое заполнение, пока сделаю с константами
 # исходные данные
@@ -42,11 +42,11 @@ Dx = 1
 Dy = 1
 Dk = 0.7
 q = 1
-n1 = 4
-n2 = 4
+n1 = 8
+n2 = 8
 m = n1 * n2
-a = 0.25
-b = 0.25
+a = c1/n1
+b = c2/n2
 
 R = RPl12(a, b, Dk)
 RT = RTildaPl12(a, b, Dx, Dy, Dk, MuX, MuY)
@@ -242,3 +242,5 @@ v = np.shape(DGlR)[0]
 x1 = x[0:w]
 x2 = x[(w + 0):(w + v)]
 
+print(np.shape(x1))
+print(x1)
